@@ -1,0 +1,222 @@
+Task 1:
+
+Table: Employee
+
+CREATE TABLE incentives(emp_id int PRIMARY KEY AUTO_INCREMENT,first_name varchar(255),last_name varchar(255),
+salary int,joining_date date,department varchar(255));
+
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`) 
+VALUES (NULL, 'JOHN', 'ABRAHAM', '1000000', '2013-01-01', 'BANKING');
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`) 
+VALUES (NULL, 'MICHAL', 'CLERK', '800000', '2013-01-01', 'INSURANCE');
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`)
+VALUES (NULL, 'ROY', 'THOMAS', '700000', '2013-02-01', 'BANKING');
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`) 
+VALUES (NULL, 'TOM', 'JOSE', '600000', '2013-01-01', 'INSURANCE');
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`)
+VALUES (NULL, 'JERRY', 'PINTO', '650000', '2013-01-01', 'INSURANCE');
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`)
+VALUES (NULL, 'PHILIP', 'MATHEW', '750000', '2013-01-01', 'SERVICE');
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`) 
+VALUES (NULL, 'TESTNAME1', '123', '650000', '2013-01-01', 'SERVICE');
+INSERT INTO `employee` (`emp_id`, `first_name`, `last_name`, `salary`, `joining_date`, `department`) 
+VALUES (NULL, 'TESTNAME2', 'LNAME%', '600000', '2013-02-01', 'INSURANCE');
+
+
+Table: Incentive
+
+CREATE TABLE incentives(incentive_id int PRIMARY KEY AUTO_INCREMENT,emp_id int,incentive_date date,
+incentive_amt int,FOREIGN key (emp_id) REFERENCES employee(emp_id));
+
+INSERT INTO `incentives` (`incentive_id`, `emp_id`, `incentive_date`, `incentive_amt`) 
+VALUES ('1', '1', '2013-02-01', '5000');
+INSERT INTO `incentives` (`incentive_id`, `emp_id`, `incentive_date`, `incentive_amt`) 
+VALUES ('2', '2', '2013-02-01', '3000');
+INSERT INTO `incentives` (`incentive_id`, `emp_id`, `incentive_date`, `incentive_amt`) 
+VALUES ('3', '3', '2013-02-01', '4000');
+INSERT INTO `incentives` (`incentive_id`, `emp_id`, `incentive_date`, `incentive_amt`) 
+VALUES ('4', '1', '2013-01-01', '4500');
+INSERT INTO `incentives` (`incentive_id`, `emp_id`, `incentive_date`, `incentive_amt`) 
+VALUES ('5', '2', '2013-01-01', '3500');
+
+Query:
+
+a) Get First_Name from employee table using alias name “Employee Name”.
+
+        SELECT first_name AS employee_name FROM employee;
+
+b) Get FIRST_NAME, Joining year, Joining Month and Joining Date from employee
+table.
+
+c) Get all employee details from the employee table order by First Name Ascending
+And Salary descending?
+
+        SELECT * FROM employee ORDER BY first_name;
+
+        SELECT * FROM employee ORDER BY salary DESC;
+
+d) Get employee details from employee table whose first name contains „o‟.
+
+        SELECT * FROM employee WHERE first_name LIKE '%o%';
+
+e) Get employee details from employee table whose joining month is “January”.
+
+        SELECT * FROM employee WHERE joining_date='2013-01-01';
+
+f) Get department, total salary with respect to a department from employee table
+Order By total salary descending.
+
+        SELECT `department`,SUM(salary) FROM `employee` 
+        GROUP by department 
+        ORDER BY sum(salary) DESC;
+
+
+g) Get department wise maximum salary from employee table order by salary
+ascending?
+
+        SELECT `department`,MAX(salary) FROM `employee` 
+        GROUP by department ORDER BY 
+        max(salary) ASC;
+
+h) Select first_name, incentive amount from employee and incentives table for those
+Employees who have incentives and incentive amount greater than 3000
+
+     
+      SELECT employee.first_name, incentives.incentive_amt
+      FROM incentives
+      INNER JOIN employee ON incentives.emp_id =employee.emp_id 
+      WHERE salary > 3000;
+
+
+i) Select 2nd Highest salary from employee table.
+j) Select first_name, incentive amount from employee and incentives table for all
+Employees who got incentives using left join.
+
+       SELECT employee.first_name, incentives.incentive_amt
+       FROM employee
+       LEFT JOIN incentives ON employee.emp_id = incentives.incentive_id;
+
+ 
+k) Create View OF Employee table in which store first name, last name and salary
+only.
+
+       SELECT first_name,last_name,salary FROM employee ;
+
+
+l) Create Procedure to find out department wise highest salary.
+m) Create after Insert trigger on Employee table which insert records in view table.
+
+
+
+
+
+Task 2:
+
+Table: Sales_person
+
+create table Order1(SNo int PRIMARY KEY AUTO_INCREMENT,SName varchar(255),City varchar(255), Comm float);
+
+INSERT INTO `sales_person`(`SNo`, `SName`, `City`, `Comm`) 
+VALUES (1001,'Peel','London',0.12);
+INSERT INTO `sales_person`(`SNo`, `SName`, `City`, `Comm`) 
+VALUES (1002,'Serres','San Jose',0.13);
+INSERT INTO `sales_person`(`SNo`, `SName`, `City`, `Comm`) 
+VALUES (1003,'Axelrod','New York',0.1);
+INSERT INTO `sales_person`(`SNo`, `SName`, `City`, `Comm`) 
+VALUES (1004,'Motika','London',0.11);
+INSERT INTO `sales_person`(`SNo`, `SName`, `City`, `Comm`) 
+VALUES (1007,'Rafkin','Barcelona',0.15);
+
+
+Table: Customer
+
+create table Customer(CNM int PRIMARY KEY AUTO_INCREMENT,CName varchar(255),City varchar (255),Rating int ,
+SNo int ,FOREIGN KEY(SNo) REFERENCES sales_person(SNo)); 
+
+INSERT INTO `customer`(`CNM`, `CName`, `City`, `Rating`, `SNo`) 
+VALUES (201,'Hoffman','London',100,1001);
+INSERT INTO `customer`(`CNM`, `CName`, `City`, `Rating`, `SNo`)
+VALUES (202,'Giovanne','Rome',200,1003);
+INSERT INTO `customer`(`CNM`, `CName`, `City`, `Rating`, `SNo`) 
+VALUES (203,'Liu','San Jose',300,1002);
+INSERT INTO `customer`(`CNM`, `CName`, `City`, `Rating`, `SNo`)
+VALUES (204,'Grass','Barcelona',100,1002);
+INSERT INTO `customer`(`CNM`, `CName`, `City`, `Rating`, `SNo`) 
+VALUES (206,'Clemens','London',300,1007);
+INSERT INTO `customer`(`CNM`, `CName`, `City`, `Rating`, `SNo`) 
+VALUES (207,'Pereira','Rome',100,1004);
+
+Table: Order
+
+create table Order1(ONM int PRIMARY KEY AUTO_INCREMENT,Amt float ,Ode date,CNM int , SNo int,
+FOREIGN KEY(CNM) REFERENCES customer(CNM),FOREIGN KEY(SNo) REFERENCES sales_person(SNo));
+
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3001,18.69,1994-10-03,201,1007);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3002,1900.1,1994-10-03,207,1004);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3003,767.19,1994-10-03,201,1001);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3005,3005,1994-10-03,203,1002);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3006,3006,1994-10-04,201,1007);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3007,3007,1994-10-05,204,1002);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3008,3008,1994-10-05,206,1001);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3009,3009,1994-10-04,202,1003);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3010,3010,1994-10-06,204,1002);
+INSERT INTO `order1`(`ONM`, `Amt`, `Ode`, `CNM`, `SNo`) 
+VALUES (3011,3011,1994-10-06,206,1001);
+
+Query:
+
+a) All orders for more than $1000.
+    
+      Select * from order1 where Amt>1000;
+
+b) Names and cities of all salespeople in London with commission above 0.10.
+
+      Select SName,City from Sales_person where Comm>0.10 and City='London'
+
+c) All salespeople either in Barcelona or in London.
+
+       Select SName,City from Sales_Person where City in('Barcelona','London')
+
+d) All salespeople with commission between 0.10 and 0.12. (Boundary values should be excluded).
+
+       Select SName,Comm From Sales_Person where Comm>0.10 and Comm<0.12;
+
+e) All customers with NULL values in city column.
+
+      Select CName from Customer where City is null;
+
+f) All orders taken on Oct 3Rd and Oct 4th 1994. ****
+
+       Select * from Order1 where odate in ('03-oct-94','04-oct-94');
+
+g) All customers serviced by peel or Motika.
+
+       Select CName from customer,order1 where order1.CNM = Customer.CNM and Order1.SNo in (Select SNo from Sales_Person where SName in(''Peel','Motika'));
+
+h) All customers whose names begin with a letter from A to B ****
+
+       Select CName from Customer where CNmae Like 'A%' or CNmae Like 'B %';
+
+i) All customers excluding those with rating <= 100 unless they are located in Rome.
+
+       Select CName from Customer where Rating<=100 or City ='Rome';
+
+j) All orders except those with 0 or NULL value in amt field.
+
+       Select * from Order1 where AMT is not null and AMT <> 0 ;
+
+k) Count the number of salespeople currently listing orders in the order table.
+
+      Select Count(Distinct SNO) from order1; 
+
+
+

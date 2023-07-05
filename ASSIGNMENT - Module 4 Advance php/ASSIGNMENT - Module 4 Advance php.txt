@@ -1,0 +1,310 @@
+OOPS - 
+
+• What Is Object Oriented Programming?
+     Object-Oriented Programming (oop) is a computer programming model that organizes software design around data,or objects,rather than functions and logic.An object can be defined as a data field that has unique attributes and behavior. oop focuses on the objects that devlopers want to manipulate rather than the logic required to manipulate them. This approach to programming is well-suited for programs that are large,complex and actively updated or maintained. This includes programs for manufacturing and design , as well as mobile applications; for example,oop can be used for manufacturing system simulation software.
+
+• What Are Properties Of Object Oriented Systems? 
+
+Object: Object in onject Oriented Systems interact through messages.
+Inheritance: The main class or the root class is called as a Base class. Any class which is expected to have all properties of the base class along with its own is called as a Derived class.
+             The process of deriving such a class is Derived class.
+Abstraction: Abstraction is creating models or classes of some broad concept. Abstarction can be achived through Inheritance or even comosition.
+Encapsulation: encapsulation is a collection of function of class and object. the "Food" class is an encapsulated form.It is achived by specifying which class can use which 
+               members (private,public,protected) of an object.
+Polymorphism: Polymorphism means existing in different forms. Inheritance is an example of polymorphism. A Base class exists in different forms as derived classes. Operator overloading is 
+              an example of polymorphism in which an operator can be applied in different situations. 
+
+• What Is Difference Between Class And Interface? 
+
+     class                                      Interface
+ 
+- The 'Class' keyword is used to        - The 'interface' keyword used to create 
+   create a class.                         a interface.  
+
+- An object of a class can be crated.   - An object of an interface cannot be created.
+
+- Class doesn't support multiple        - Interface supports multiple inheritance.
+   inheritance.
+
+- A class can contain constructor.      - An interface cannot contain constructors.
+
+- It cannot contain abstract methods.   - It consists of abstract methods only.
+
+
+• What Is Overloading? 
+
+       Overloading means to dynamically crate properties and methods. these dynamic entities are processed via magic methods one can establish in a class for various action types.the overloading methods are invoked when interacting with properties or methods that have been declared or are not visible in the current scope. The rest of this section will use the terms inaccessible properties and inaccessible methods to refer to this combination of declartion and visibility. All overloading methods must be defined as public.
+
+• What Is T_PAAMAYIM_NEKUDOTAYIM (Scope Resolution Operator (::)) with Example 
+
+       The Scope resolution operator also known as Paamayim Nekudotayim or more commonly known as the double colon is a token that allows access to static,constant,and
+overridden properties or methods of a class. It is used to refer to blocks or codes in context to classes,objects,etc. An identifier is used with the scope resolution operator. the most common example of the application of scope resolution operator is to access the properties and methods of the claas.
+
+example:
+<?php 
+
+class democlass{
+     const PI = 3.14;
+}
+
+echo democlass::PI;
+
+?>
+
+• What are the differences between abstract classes and interfaces?
+
+      Abstract class                                 Interface
+
+- An abstract class can contain both abstract    - Interface contain only abstract methods.
+  and non-abstract methods.
+
+- An abstract class can have all four;static,    - Only final and static variable are used.
+  non-static and final,non-final variables.
+
+- To declare abstract class abstract keywords    - The interface can be declared with the 
+  are used.                                         interface keyword.
+
+- It supports multiple inheritance.              - It does not support multiple inheritance.
+
+- It has class members like private and          - It has class members public by default. 
+  protected,etc.
+
+
+• Define Constructor and Destructor? 
+
+->Constructor:
+        A constructor is a method that is automatically called when you create a new instance of a class. The constructor's name is always _construct, and it can accept parameters that are passed to the object.
+
+  = Types of constructor:
+    1. Default constructor
+    2. Parametrized constructor
+    3. Copy constructor
+
+->Destructor:
+       A destructor is a method that is automatically called when an object is no longer needed or refrenced. The destructor's name is always _destruct, and it cannot accept any parameters.
+
+• How to Load Classes in PHP? 
+
+   PHP load classes are used for declaring its object etc. in object oriented applications. PHP parser loads it automatically, if it is registerd with spl_autoload_register() function. PHP parser gets the least chance to load class/interface before emitting an error.
+
+->syntax:
+
+spl_autoload_register(function($class_name){
+     include $class_name . '.php';
+});
+
+->example:
+<?php
+   spl_autoload_register(function ($class_name){
+        include $class_name . '.php';
+   });
+   $obj = new mytest1();
+   $obj2= new mytest2();
+   echo "Objects of mytest1 and mytest2 " + "class created successfully";
+?> 
+
+• How to Call Parent Constructor? 
+     In order to run parent constructor , a call to parent::_construct() within the child constructor is required. If the child does not define a constructor then it may be inherited from the parent class just like normal class method (if it was not declared as private).
+
+->example:
+<?php
+class BaseClass {
+   function _construct(){
+       print "In BaseClass Constructor\n";
+   }
+}
+
+class Subclass extends BaseClass{
+    function _construct() {
+        parent::_construct();
+        print "In SubClass constructor\n";
+    }
+}
+
+class OtherClass extends BaseClass{
+}
+
+$obj = new BaseClass();
+$obj = new SubClass();
+$obj = new OtherClass();
+
+?>
+
+
+• Are Parent Constructor Called Implicitly When Create An ObjectOf Class?
+            
+        Parent constructor are not called implicitly if the child class defines a constructor. In order to run a parent constructor, a call to parent::_construct() within the child constructor is required.
+
+• What Happen, If Constructor Is Defined As Private Or Protected? 
+      
+        If a constructor is declared as private , then its objects are only accessible from within the declared class. You cannot access its objects from outside the constructor class.
+
+        The protected access modifier is accessible within the package. However, it can also accessible outside the package but through inheritance only.
+
+
+• What are PHP Magic Methods/Functions? List them Write program for Static Keyword in PHP? 
+
+        Magic methods are special methods which override PHP's default's action when certain action are performed on an object. The following method names are considered magical:__construct(),__destruct(),__call(),__callstatic(),__get(),__set(),__isset(),__unset(),__sleep(),__wakeup(),__tostring(),__invoke(),__clone(),and __debugInfo().
+
+<?php
+
+class A {
+   public $var1;
+   public static function __set_state($an_array) {
+        $obj = new A;
+        $obj -> var1 = $an_array['var1'];
+        return $obj;
+   }
+}
+
+class B extends A {
+
+}
+
+$b = new B;
+$b -> var1 = 5;
+
+eval('$new_b =' . var_export($b,true).';');
+var_dump($new_b);
+
+?>
+
+
+• Create multiple Traits and use it in to a single class?
+
+       PHP only supports single inheritance: a child class can inherit only from one single parent. so, what if a class needs to inherit multiple behaviors? OOP traits solve this problem. Traits are used to declare methods that can be used in multiple classes. Traits can have methods and abstract methods that can be used in multiple classes, and the methods can have any access modifier(public,private, or protected). Traits are declared with the trait keyword.
+
+<?Php 
+trait message1 {
+    public function msg1() {
+       echo "OOP is fun!";
+    }
+}
+trait message2 {
+    public function msg2() {
+       echo "OOP reduces code duplication!";
+    }
+}
+ 
+class Welcome {
+  use message1;
+}
+
+class Welcome1 {
+  use message1, message2;
+} 
+
+$obj = new welcome();
+$obj->msg1();
+echo"<br>";
+
+$obj2 = new Welcome1();
+$obj2->msg1();
+$obj2->msg2();
+
+?>
+
+• Write PHP Script of Object Iteration? 
+
+<?php
+class myclass {
+    private $var;
+    protected $var1;
+    public $x, $y, $z;
+    public function __construct() {
+           $this->var = "private variable";
+           $this->var1 = TRUE;
+           $this->x = 100;
+           $this->y = 200;
+           $this->z = 300;
+    }
+    public function iterate() {
+       foreach ($this as $key => $value) {
+             print "$key => $value";
+       }
+    }
+}
+$obj = new myclass();
+foreach ($obj as $key => $value) {
+    print "$key => $value";
+}
+echo " ";
+$obj->iterate();
+
+?>
+
+• Use of The $this keyword 
+     
+      The $this keyword refers to the current object, and is only available inside methods.
+
+example:
+
+<?php
+class fruit {
+  public $name;
+  function set_name($name) {
+       $this->name = $name;
+  }
+}
+$apple = new fruit();
+$apple->set_name("Apple");
+
+echo $apple->name;
+?>
+
+
+
+JQuery - 
+
+
+a)	What is jQuery?
+=>jQuery is a lightweight, “write less, do more”, javaScript libarary.
+=>The purpose of jQuery is to make it much easier to use javascript on your website.
+=>jQuery takes a lot of common tasks that require many lines of javaScript code to accomplish, and wraps them into methods that you can call with a single line of code.
+=>jQuery   also  simplifies a  lot of the complicated things from JavaScript, like AJAX calls and DOM manipulation.
+
+b) How are JavaScript and jQuery different? 
+=>JavaScript is a programming language while jQuery is a library that consists of JavaScript code. The jQuery code library comes with ready-made JavaScript code implementations, which you can use to build websites more quickly.
+
+
+c)	Which is the starting point of code execution in jQuery?
+=>$(document).ready() function is the stating point of jQuery code. It is executed when DOM is loaded.
+
+
+d) Document Load Vs Window. Load() jQuery?
+=> The  key difference between $(document). ready() and $(window). Load() event is that the code included inside onload function will run once the entire page (images ,iframes, stylesheets, etc) are loaded whereas the  $(document). ready() event fires before all images,iframes etc.
+
+e)	What is the difference between prop and attr?
+=> prop() method provides a way to explicitly retrieve property values, while . attr() retrieves attributes. For example, selectedIndex , tagName , nodeName , nodeType , ownerDocument , defaultChecked , and defaultSelected should be retrieved and set with the . prop() method.
+
+
+f)	Explain Difference Between JQuery And JavaScript?
+=>
+         jQuery	                                                         JavaScript
+
+It is a javascript library.	                               It is a dynamic and interpreted web-development programming language.
+The user only need to write the required jQuery code         The user needs to write the complete js code
+It is less time-consuming.	                               It is more time consuming as the whole script is written.
+There is no requirement for handling multi-browser           Developers develop their own code for handling multi-browser 
+compatibility issues.                                        compatibility.
+It is required to include the URL of the jQuery library in 	 JavaScript is supportable on every browser. Any additional plugin need 
+the header of the page.                                      not to be included.
+
+
+
+g) How We Can Select The Specified Element From The List Of  Elements In?
+=> The <li> HTML element is used to represent an item in a list. It must be contained in a parent element: an ordered list (<ol>), an unordered list(<ul>), or a menu (<menu>).In means and unordered lists, list items are usually displayed using bullet points. In ordered  lists, they are usually displayed with an ascending counter on the left, such as a number or letter.
+h) In design Change The Color Of Even Elements To “green”And Change The Color Of Odd Elements To “blue” Color? Give An Example Code?
+=>
+
+
+i)How We Can Implement Animation Effects In Jquery?
+=>jQuery Animations – The animate() method
+The jQuery animate() method is used to create custom  animations.
+Syntax: $(selector). Animate ({params},speed, callback); The required paramas parameter defines the CSS properties to be animated.
+
+
+
+
+
+
